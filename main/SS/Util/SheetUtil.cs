@@ -789,8 +789,17 @@ namespace NPOI.SS.Util
         {
             // Try to find font in system fonts. If we can not find out,
             // use "Arial". TODO-Fonts: More fallbacks.
+            SixLabors.Fonts.FontFamily fontFamily;
+            if (GlobalFontResolver.DefaultFontCollection != null)
+            {
+                if (GlobalFontResolver.DefaultFontCollection.TryGet(cacheKey.FontName, CultureInfo.CurrentCulture, out fontFamily))
+                {
+                    return new Font(fontFamily, cacheKey.FontHeightInPoints, cacheKey.Style);
+                }
+            }
 
-            if (!SystemFonts.TryGet(cacheKey.FontName, CultureInfo.CurrentCulture, out var fontFamily))
+
+            if (!SystemFonts.TryGet(cacheKey.FontName, CultureInfo.CurrentCulture, out fontFamily))
             {
                 if (!SystemFonts.TryGet("Arial", CultureInfo.CurrentCulture, out fontFamily))
                 {

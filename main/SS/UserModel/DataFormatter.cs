@@ -330,7 +330,7 @@ namespace NPOI.SS.UserModel
             // For now, if we detect 2+ parts, we call out to CellFormat to handle it
             // TODO Going forward, we should really merge the logic between the two classes
 
-            if (formatStr.IndexOf(';') != -1 &&
+            if (!formatStr.Contains(';') &&
                 (formatStr.IndexOf(';') != formatStr.LastIndexOf(';')
                  || rangeConditionalPattern.IsMatch(formatStr)
                 ))
